@@ -3,7 +3,7 @@
   "displayName": "Image Tracking Relocalization",
   "version": "0.1.0",
   "unity": "2022.3",
-  "description": "A tool to relocalize with ARFoundation's image tracking feature.",
+  "description": "This Unity plugin relocalizes AR coordinate systems across one or more devices using enhanced image tracking. It achieves stability by processing a sequence of consecutively tracked image poses, ensuring precise and consistent AR experiences.",
   "keywords": [
     "ar",
     "xr",
@@ -17,5 +17,12 @@
   "dependencies": {
     "com.unity.xr.arfoundation": "5.1.0",
     "com.unity.xr.arkit": "5.1.0"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "External Marker Relocalization",
+      "description": "A demonstration of relocalization using external marker",
+      "path": "Samples~/ExternalMarkerRelocalization"
+    }
+  ]
 }
