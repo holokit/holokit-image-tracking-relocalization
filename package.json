@@ -1,0 +1,21 @@
+{
+  "name": "com.holoi.image-tracking-relocalization",
+  "displayName": "Image Tracking Relocalization",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "description": "A tool to relocalize with ARFoundation's image tracking feature.",
+  "keywords": [
+    "ar",
+    "xr",
+    "arfoundation"
+  ],
+  "author": {
+    "name": "Holo Interactive",
+    "email": "yuchen@holoi.com",
+    "url": "https://holoi.com"
+  },
+  "dependencies": {
+    "com.unity.xr.arfoundation": "5.1.0",
+    "com.unity.xr.arkit": "5.1.0"
+  }
+}
