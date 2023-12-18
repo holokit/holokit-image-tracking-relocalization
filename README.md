@@ -31,3 +31,6 @@ The accompanying GIF demonstrates the external marker relocalization process. In
 ## Dynamically Renderer Marker
 
 In many cases, an external marker might not be readily available, as it's impractical to expect users to carry such markers with them at all times. Addressing this, our plugin offers a solution specifically designed for multiplayer AR experiences. In this setup, the host device dynamically renders a merker image on its screen, which client devices then scan to relocalize their coordinate systems. This method, while more sophisticated due to the involvement of network communications, offers a practical solution for multiplayer scenarios where external markers are not feasible.
+
+### How To Use Dynamically Rendered Marker To Relocalize
+
