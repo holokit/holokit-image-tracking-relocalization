@@ -39,12 +39,16 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization
             }
         }
 
+        [Tooltip("The maximum timestamp gap between two consecutive tracked image poses.")]
         [SerializeField] private double m_MaxTimestampGap = 1.5f;
 
+        [Tooltip("The desired number of tracked image poses needed to calculate the final result.")]
         [SerializeField] private int m_DesiredNumOfSamples = 50;
 
+        [Tooltip("The maximum acceptable standard deviation for tracked image pose position.")]
         [SerializeField] private float m_MaxPositionStdDev = 0.02f;
 
+        [Tooltip("The maxinum acceptable standard deviation for tracked image pose rotation.")]
         [SerializeField] private float m_MaxRotationStdDev = 36f;
 
         private ARTrackedImageManager m_ARTrackedImageManager;
