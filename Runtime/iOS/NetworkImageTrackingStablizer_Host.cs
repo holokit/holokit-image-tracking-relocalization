@@ -63,6 +63,11 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         private bool m_IsDisplayingMarker;
 
+        private void Start_Host()
+        {
+            m_MarkerRenderer = GetComponent<MarkerRenderer>();
+        }
+
         public void StartDisplayingMarker()
         {
 #if !UNITY_EDITOR
@@ -88,6 +93,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         private void OnARSessionUpdatedFrame(double timestamp, Matrix4x4 matrix)
         {
+            Debug.Log($"[ARKitNativeProvider] OnARSessionUpdatedFrame {timestamp}");
             TimedCameraPose timedCameraPose = new()
             {
                 Timestamp = timestamp,

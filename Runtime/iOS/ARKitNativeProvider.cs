@@ -20,6 +20,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         public ARKitNativeProvider()
         {
             m_Ptr = Init_Native();
+            s_Providers[m_Ptr] = this;
             RegisterCallbacks();
             InterceptUnityARSessionDelegate();
         }

@@ -11,7 +11,7 @@ typedef struct UnityXRNativeSession
     void* sessionPtr;
 } UnityXRNativeSession;
 
-typedef void (*OnARSessionUpdatedFrame)(double, const float *);
+typedef void (*OnARSessionUpdatedFrame)(void * _Nonnull, double, const float *);
 
 @interface ARKitNativeProvider : NSObject
 

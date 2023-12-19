@@ -18,6 +18,9 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         private void Start()
         {
             m_MarkerRenderer = GetComponent<MarkerRenderer>();
+
+            Start_Host();
+            Start_Client();
         }
     }
 }

@@ -33,7 +33,7 @@
         float *matrix = [ARKitNativeProvider getUnityMatrix:frame.camera.transform];
         double timestamp = frame.timestamp;
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.onARSessionUpdatedFrame(timestamp, matrix);
+            self.onARSessionUpdatedFrame((__bridge void *)self, timestamp, matrix);
             delete[](matrix);
         });
     }
