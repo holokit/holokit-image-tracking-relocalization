@@ -36,6 +36,13 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             }
         }
 
+        public void ResetOrigin(Vector3 position, Quaternion rotation)
+        {
+            float[] p = { position.x, position.y, position.z };
+            float[] r = { rotation.x, rotation.y, rotation.z, rotation.w };
+            ResetOrigin_Native(m_Ptr, p, r);
+        }
+
         private void RegisterCallbacks()
         {
             RegisterCallbacks_Native(m_Ptr, OnARSessionUpdatedFrameDelegate);
@@ -84,6 +91,9 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         [DllImport("__Internal", EntryPoint = "HoloInteractiveImageTrackingRelocalization_ARKitNativeProvider_restoreUnityARSessionDelegate")]
         private static extern void RestoreUnityARSessionDelegate_Native(IntPtr self, IntPtr sessionPtr);
+
+        [DllImport("__Internal", EntryPoint = "HoloInteractiveImageTrackingRelocalization_ARKitNativeProvider_resetOrigin")]
+        private static extern void ResetOrigin_Native(IntPtr self, float[] position, float[] rotation);
 
         [AOT.MonoPInvokeCallback(typeof(Action<IntPtr, double, IntPtr>))]
         private static void OnARSessionUpdatedFrameDelegate(IntPtr providerPtr, double timestamp, IntPtr matrixPtr)

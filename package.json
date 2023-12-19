@@ -17,7 +17,8 @@
   "dependencies": {
     "com.unity.xr.arfoundation": "5.1.0",
     "com.unity.xr.arkit": "5.1.0",
-    "com.unity.netcode.gameobjects": "1.7.1"
+    "com.unity.netcode.gameobjects": "1.7.1",
+    "com.unity.shadergraph": "16.0.4"
   },
   "samples": [
     {

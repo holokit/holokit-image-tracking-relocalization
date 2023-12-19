@@ -26,7 +26,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         private const float INCH_TO_METER_RATIO = 0.0254f;
 
-        public void SpawnMarker()
+        public (Vector3, Vector3) SpawnMarker()
         {
             PhoneModel phoneModel = GetCurrentPhoneModel();
 
@@ -38,6 +38,16 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             float screenDpi = phoneModel.ModelSpecs.ScreenDpi == 0f ? Screen.dpi : phoneModel.ModelSpecs.ScreenDpi;
             float markerWidth = MARKER_WIDTH * METER_TO_INCH_RATIO * screenDpi;
             m_MarkerCanvas.MarkerImage.sizeDelta = new(markerWidth, markerWidth);
+            // Calculate the camera to marker offset
+            Vector3 phoneModelCameraOffset = new(phoneModel.ModelSpecs.CameraOffset.y, -phoneModel.ModelSpecs.CameraOffset.x, phoneModel.ModelSpecs.CameraOffset.z);
+            float horizontalOffset = m_MarkerCanvas.MarkerImage.position.x / screenDpi * INCH_TO_METER_RATIO;
+            float verticalOffset = -((screenHeight / 2f) - m_MarkerCanvas.MarkerImage.position.y) / screenDpi * INCH_TO_METER_RATIO;
+            Vector3 cameraToMarkerOffset = phoneModelCameraOffset + new Vector3(horizontalOffset, 0f, 0f) + new Vector3(0f, verticalOffset, 0f);
+            // Calculate the camera to screen center offset
+            float screenWidth = phoneModel.ModelSpecs.ScreenResolution == Vector2.zero ? GetScreenHeight() : phoneModel.ModelSpecs.ScreenResolution.y;
+            Vector3 cameraToScreenCenterOffset = phoneModelCameraOffset + new Vector3(screenWidth / 2f / screenDpi * INCH_TO_METER_RATIO, 0f, 0f);
+
+            return (cameraToMarkerOffset, cameraToScreenCenterOffset);
         }
 
         public void DestroyMarker()

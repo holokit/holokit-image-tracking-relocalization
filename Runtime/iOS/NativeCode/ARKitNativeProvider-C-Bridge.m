@@ -23,6 +23,7 @@ void HoloInteractiveImageTrackingRelocalization_ARKitNativeProvider_interceptUni
     ARKitNativeProvider *provider = (__bridge ARKitNativeProvider *)self;
     ARSession *session = (__bridge ARSession *)nativeARSessionPtr->sessionPtr;
     [provider setUnityARSessionDelegate:session.delegate];
+    [provider setSession:session];
     if (session.delegate != provider) {
         [session setDelegate:provider];
     }
@@ -38,4 +39,10 @@ void HoloInteractiveImageTrackingRelocalization_ARKitNativeProvider_restoreUnity
     if (session.delegate == provider) {
         [session setDelegate:provider.unityARSessionDelegate];
     }
+}
+
+void HoloInteractiveImageTrackingRelocalization_ARKitNativeProvider_resetOrigin(void *self, float position[3], float rotation[4]) {
+    ARKitNativeProvider *provider = (__bridge ARKitNativeProvider *)self;
+    simd_float4x4 transform_matrix = [ARKitNativeProvider getSimdFloat4x4WithPosition:position rotation:rotation];
+    [[provider session] setWorldOrigin:transform_matrix];
 }
