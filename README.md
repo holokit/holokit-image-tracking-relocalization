@@ -1,8 +1,37 @@
 # Image Tracking Relocalization
 
+## Overview
+
 In certain AR projects, it's essential to transform the entire virtual coordinate system to align virtual content with the physical environment or synchronize multiple devices in multiplayer settings. This Unity plugin enhances ARFoundation's image tracking, enabling device coordinate system relocalization through tracked image poses. A notable challenge with ARFoundation's image tracking is its inconsistent stability; relying on single instances often leads to significant deviations. Our plugin addresses this by stablizing image tracking through a sequence of consecutively tracked image poses, improving the accuracy of the final outcome.
 
 The plugin provides two relocalization methods, which are external marker-based and dynamically rendered marker-based approaches, making it suitable for both single-player to multiplayer experiences.
+
+## Setup
+
+This package requires two git URL-based dependency packages, the [HoloKit Unity SDK package](https://github.com/holoi/holokit-unity-sdk) and the [Netcode MultipeerConnectivity transport package](https://github.com/Unity-Technologies/multiplayer-community-contributions/tree/main/Transports/com.community.netcode.transport.multipeer-connectivity). The HoloKit Unity SDK is essential for accessing the physical parameters of iPhone models, and the Netcode MultipeerConnectivity transport is necessary for connecting nearby iOS devices.
+
+<img width="228" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/df9e812b-2334-40e2-8d40-13d2b2b87cc9">
+
+To install these dependencies in the Unity Package Manager, click the + button in the top-left corner and choose "Install package from git URL". Then input the following two git URLs:
+
+```
+"com.holoi.xr.holokit": "https://github.com/holoi/holokit-unity-sdk.git"
+```
+```
+https://github.com/Unity-Technologies/multiplayer-community-contributions.git?path=/Transports/com.community.netcode.transport.multipeer-connectivity
+```
+This manual setup is necessary because I don't know how to integrate git URL-based dependency packages directly into the `package.json` file. If you know how to do it, please contact me at `yuchenz27@outlook.com`. Thank you!
+ 
+## Project Environment
+
+Please be aware that these boilerplates are designed exclusively for iOS devices.
+
+We have successfully tested them with the following software versions:
+
+- Unity 2023.2.2f1
+- Xcode 15.1 beta 3
+- 
+In theory, other versions of Unity and Xcode that are close to these should also be compatible. However, if you encounter any issues during the build process, feel free to raise an issue in the repository.
 
 ## External Marker Relocalization
 
@@ -60,7 +89,7 @@ When the queue size of these image pose pairs exceeds a certain threshold, the l
 
 ### How To Use Dynamically Rendered Marker To Relocalize
 
-The package includes a sample named "Dynimically Rendered Marker Relocalization", which serves as an ideal starting point for your project. This sample requires Unity Netcode's [MultipeerConnectivity transport package](https://github.com/Unity-Technologies/multiplayer-community-contributions/tree/main/Transports/com.community.netcode.transport.multipeer-connectivity), which must be installed seperately. For installation instructions, please consult with the README file of the MultipeerConnectivity transport package. Note that MultipeerConnectivity, being Apple's networking framework, restricts this sample's compatibility to iOS devices only.
+The package includes a sample named "Dynimically Rendered Marker Relocalization", which serves as a multiplayer AR project demonstration.
 
 <img width="380" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/96673df5-9d0e-427a-8ffd-e45598da7a45">
 
