@@ -109,9 +109,9 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         public UnityEvent OnPoseSynced;
 
-        public UnityEvent OnAlignmentMarkerDenied;
-
         public UnityEvent OnAlignmentMarkerAccepted;
+
+        public UnityEvent OnAlignmentMarkerDenied;
 
         private void Start_Client()
         {
@@ -173,11 +173,13 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         public void StartTrackingMarker()
         {
-            Debug.Log("[NetworkImageTrackingStablizer] StartTrackingMarker");
             m_ClientStatus = ClientStatus.SyncingPose;
 
             m_ARKitNativeProvider = new();
             m_ARKitNativeProvider.OnARSessionUpdatedFrame += OnARSessionUpdatedFrame_Client;
+
+            foreach (var trackable in m_ARTrackedImageManager.trackables)
+                trackable.gameObject.SetActive(true);
 
             m_ARTrackedImageManager.trackedImagesChanged += OnTrackedImageChanged;
             m_ARTrackedImageManager.enabled = true;
@@ -185,10 +187,12 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         public void StopTrackingMarker()
         {
-            Debug.Log("[NetworkImageTrackingStablizer] StopTrackingMarker");
             m_ARKitNativeProvider.OnARSessionUpdatedFrame -= OnARSessionUpdatedFrame_Client;
             m_ARKitNativeProvider.Dispose();
             m_ARKitNativeProvider = null;
+
+            foreach (var trackable in m_ARTrackedImageManager.trackables)
+                trackable.gameObject.SetActive(false);
 
             m_ARTrackedImageManager.trackedImagesChanged -= OnTrackedImageChanged;
             m_ARTrackedImageManager.enabled = false;
@@ -245,7 +249,6 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
                 }
                 _ = m_ImagePosePairQueue.Dequeue();
             }
-
         }
 
         /// <summary>
@@ -293,21 +296,22 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         /// </summary>
         private void OnPoseSyncedInternal()
         {
-            OnPoseSynced?.Invoke();
-
-            Debug.Log($"[NetworkImageTrackingStablizer] Coordinate system synced");
             m_ClientStatus = ClientStatus.Synced;
 
             // Reset world origin based on the sync result
             var lastSyncResult = m_SyncResultQueue.Last();
             float theta = lastSyncResult.ThetaInDegree;
             Vector3 translate = lastSyncResult.Translate;
+            Debug.Log($"[NetworkImageTrackingStablizer] translate: {translate}, theta: {theta}");
             m_ARKitNativeProvider.ResetOrigin(translate, Quaternion.AngleAxis(theta, Vector3.up));
 
             StopTrackingMarker();
 
             // Spawn the alignment marker to manually validate the result
             SpawnAlignmentMarker();
+
+            OnPoseSynced?.Invoke();
+            Debug.Log($"[NetworkImageTrackingStablizer] Coordinate system synced");
         }
 
         private void SpawnAlignmentMarker()
@@ -333,12 +337,16 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         public void DenyAlignmentMarker()
         {
             OnAlignmentMarkerDenied?.Invoke();
+
             OnTimestampSyncedInternal();
         }
 
         public void AcceptAlignmentMarker()
         {
             OnAlignmentMarkerAccepted?.Invoke();
+
+            if (m_AlignmentMarker != null)
+                Destroy(m_AlignmentMarker);
         }
     }
 }

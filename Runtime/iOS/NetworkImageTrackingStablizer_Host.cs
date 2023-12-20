@@ -22,11 +22,6 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
     /// </summary>
     public partial class NetworkImageTrackingStablizer : NetworkBehaviour
     {
-        /// <summary>
-        /// The offset from the host's camera to its screen center. This is used by the client to correctly render the alignment marker.
-        /// </summary>
-        public readonly NetworkVariable<Vector3> HostCameraToScreenCenterOffset = new(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
         public bool IsDisplayingMarker => m_IsDisplayingMarker;
 
         [Header("Host Side Calibration Parameters")]

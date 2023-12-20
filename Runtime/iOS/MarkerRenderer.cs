@@ -38,6 +38,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             float screenDpi = phoneModel.ModelSpecs.ScreenDpi == 0f ? Screen.dpi : phoneModel.ModelSpecs.ScreenDpi;
             float markerWidth = MARKER_WIDTH * METER_TO_INCH_RATIO * screenDpi;
             m_MarkerCanvas.MarkerImage.sizeDelta = new(markerWidth, markerWidth);
+
             // Calculate the camera to marker offset
             Vector3 phoneModelCameraOffset = new(phoneModel.ModelSpecs.CameraOffset.y, -phoneModel.ModelSpecs.CameraOffset.x, phoneModel.ModelSpecs.CameraOffset.z);
             float horizontalOffset = m_MarkerCanvas.MarkerImage.position.x / screenDpi * INCH_TO_METER_RATIO;
