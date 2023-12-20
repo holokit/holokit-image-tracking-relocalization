@@ -194,8 +194,8 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             foreach (var trackable in m_ARTrackedImageManager.trackables)
                 trackable.gameObject.SetActive(false);
 
-            m_ARTrackedImageManager.trackedImagesChanged -= OnTrackedImageChanged;
             m_ARTrackedImageManager.enabled = false;
+            m_ARTrackedImageManager.trackedImagesChanged -= OnTrackedImageChanged;
         }
 
         private void OnTrackedImageChanged(ARTrackedImagesChangedEventArgs args)
@@ -302,7 +302,6 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             var lastSyncResult = m_SyncResultQueue.Last();
             float theta = lastSyncResult.ThetaInDegree;
             Vector3 translate = lastSyncResult.Translate;
-            Debug.Log($"[NetworkImageTrackingStablizer] translate: {translate}, theta: {theta}");
             m_ARKitNativeProvider.ResetOrigin(translate, Quaternion.AngleAxis(theta, Vector3.up));
 
             StopTrackingMarker();
@@ -330,6 +329,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
                 {
                     m_AlignmentMarker.transform.SetParent(playerController.transform);
                     m_AlignmentMarker.transform.localPosition = m_CameraToScreenCenterOffset.Value;
+                    m_AlignmentMarker.transform.localRotation = Quaternion.identity;
                 }
             }
         }

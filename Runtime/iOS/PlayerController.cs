@@ -12,7 +12,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
     {
         private void Update()
         {
-            if (IsOwner)
+            if (IsSpawned && IsOwner && Camera.main != null)
             {
                 transform.SetPositionAndRotation(Camera.main.transform.position, Camera.main.transform.rotation);
             }
