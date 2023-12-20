@@ -68,11 +68,13 @@ The scene incorporates several network components. For those unfamiliar with Uni
 
 The key script in this process is `NetworkImageTrackingStablizer`, which aims to stably track the marker image on the host device's screen.
 
-<img width="844" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/95ff4c1e-879c-4507-9d99-faa80c67fc4e">
+<img width="844" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/a0213eb2-a278-435b-8c2e-06d9839e3dac">
 
 Given the complexity of the two phases discussed earlier, this script includes several calibrated parameters on both the host and client sides. We advise against modifying these parameters unless you thoroughly understand the process.
 
 The script operates differently on host and client sides, and that is why we use a partial class to seperate the script. On the host, it works alongside the `MarkerRenderer` script to create the marker image and calculate offsets related to the physical dimensions of iPhones. On the client side, it handles calculating the timestamp offset and the synchronization of the coordinate system. It triggers Unity events like `OnTimestampSynced` and `OnPoseSynced` to indicate successful timestamp and origin synchronization.
+
+<img width="848" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/57347153-4100-461c-a995-fd41c6757f0b">
 
 It's crucial to note that after the client resets its origin, the user must visually validate the synchronization result. The client renders an alignment marker, which is a visual frame around the host device. If this marker accurately represents the host's real-time physical location, the user should confirm the synchronization result, triggering the `OnAlignmentMarkerAccepted` event. If the alignment is off, `OnAlignmentMarkerDenied` is invoked, and the client attempts to resynchronize the coordinate system for a more accurate result.
 
