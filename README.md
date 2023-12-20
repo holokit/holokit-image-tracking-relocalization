@@ -6,7 +6,7 @@ In certain AR projects, it's essential to transform the entire virtual coordinat
 
 The plugin provides two relocalization methods, which are external marker-based and dynamically rendered marker-based approaches, making it suitable for both single-player to multiplayer experiences.
 
-## Setup
+## Install Dependency Packages
 
 This package requires two git URL-based dependency packages, the [HoloKit Unity SDK package](https://github.com/holoi/holokit-unity-sdk) and the [Netcode MultipeerConnectivity transport package](https://github.com/Unity-Technologies/multiplayer-community-contributions/tree/main/Transports/com.community.netcode.transport.multipeer-connectivity). The HoloKit Unity SDK is essential for accessing the physical parameters of iPhone models, and the Netcode MultipeerConnectivity transport is necessary for connecting nearby iOS devices.
 
