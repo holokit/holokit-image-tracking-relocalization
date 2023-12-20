@@ -18,7 +18,7 @@ For relocalizing the coordinate system with an external marker, the `ImageTracki
 
 The `ImageTrackingStablizer` script calculates the standard deviation of poses from multiple consecutively tracked images. When this deviation falls below a predefined threshold, indicating stable tracking, it captures the pose of the last tracked image as the final pose. Subsequently, it triggers a Unity event `OnTrackedImagePoseStablized`, passing the image's position and rotation as parameters.
 
-The `OnTrackedImagePoseStablized` Unity event is received by the `WorldTransformResetter` script. To facilitate easy transformation of the entire coordinate system, all game objects are nested under a root object named "World Transform". Upon detecting a stable image pose, this root object is moved to the image location, causing all child objects to follow suit. While alternative methods for coordinate system relocalization are possible, this straightforward approach offers a viable option.
+The `OnTrackedImagePoseStablized` Unity event is received by the `WorldTransformResetter` script. To facilitate easy transformation of the entire coordinate system, all game objects are nested under a root object named "World Transform". Upon detecting a stable image pose, this root object is moved to the image location, causing all child objects to follow suit. While alternative methods for coordinate system relocalization are possible and we did reset the coordinate system origin in "Dynamically Rendered Marker Relocalization" sample, this straightforward approach offers a viable option.
 
 <img width="423" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/e257d028-e2d9-4953-986e-844271fef596">
 
@@ -32,7 +32,7 @@ The accompanying GIF demonstrates the external marker relocalization process. In
 
 In many cases, an external marker might not be readily available, as it's impractical to expect users to carry such markers with them at all times. Addressing this, our plugin offers a solution specifically designed for multiplayer AR experiences. In this setup, the host device dynamically renders a marker image on its screen, which client devices then scan to relocalize their coordinate systems. This method, while more sophisticated due to the involvement of network communications, offers a practical solution for multiplayer scenarios where external markers are not feasible.
 
-(A demo GIF here)
+![ezgif-3-1cbea9d112](https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/5dde4cce-de5e-4efc-af97-383f2b182058)
 
 ### How Dynamically Rendered Marker Relocalization Works
 
