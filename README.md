@@ -89,7 +89,9 @@ When the queue size of these image pose pairs exceeds a certain threshold, the l
 
 ### How To Use Dynamically Rendered Marker To Relocalize
 
-The package includes a sample named "Dynimically Rendered Marker Relocalization", which serves as a multiplayer AR project demonstration.
+The package contains the "Dynamically Rendered Marker Relocalization" sample, a multiplayer AR project demo. For building your own multiplayer AR project, we suggest starting with this [multiplayer AR boilerplate](https://github.com/holoi/holokit-immersal-multiplayer-boilerplate). It leverages this package and can simplify your project development.
+
+The package includes a sample named "Dynimically Rendered Marker Relocalization", which serves as a multiplayer AR project demonstration. If you want to build your own multiplayer AR project using this package, we highly recommend you use this [multiplayer AR boilerplate](https://github.com/holoi/holokit-immersal-multiplayer-boilerplate) as the starting point, which utilizes this package and helps you build your project mush easier. 
 
 <img width="380" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/96673df5-9d0e-427a-8ffd-e45598da7a45">
 
