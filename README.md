@@ -104,7 +104,7 @@ The scene incorporates several network components. For those unfamiliar with Uni
 
 The key script in this process is `NetworkImageTrackingStablizer`, which aims to stably track the marker image on the host device's screen.
 
-<img width="844" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/a0213eb2-a278-435b-8c2e-06d9839e3dac">
+<img width="854" alt="image" src="https://github.com/holoi/com.holoi.xr.image-tracking-relocalization/assets/44870300/33dc9773-b2ae-4dff-b283-d24fc483bc45">
 
 Given the complexity of the two phases discussed earlier, this script includes several calibrated parameters on both the host and client sides. We advise against modifying these parameters unless you thoroughly understand the process.
 
@@ -114,3 +114,4 @@ The script operates differently on host and client sides, and that is why we use
 
 It's crucial to note that after the client resets its origin, the user must visually validate the synchronization result. The client renders an alignment marker, which is a visual frame around the host device. If this marker accurately represents the host's real-time physical location, the user should confirm the synchronization result, triggering the `OnAlignmentMarkerAccepted` event. If the alignment is off, `OnAlignmentMarkerDenied` is invoked, and the client attempts to resynchronize the coordinate system for a more accurate result.
 
+While the synchronization result starts accurately after the user's visual validation, please be aware that this method doesn't ensure lasting precision. Accuracy may decline during prolonged sessions or with substantial device movement. In case of significant deviation, realign the coordinates by rescanning the marker image.
