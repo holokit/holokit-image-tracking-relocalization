@@ -107,10 +107,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.Samples.DynamicallyRend
                 if (m_NetworkImageTrackingStablizer.IsDisplayingMarker)
                     ToggleDisplayMarker();
             }
-            else
-            {
-                
-            }
+
             NetworkManager.Singleton.Shutdown();
         }
 
@@ -155,7 +152,6 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.Samples.DynamicallyRend
         public void OnResyncPose()
         {
             m_ResyncPoseButton.SetActive(false);
-            m_TrackingMarkerText.SetActive(true);
         }
 
         public void AcceptMarker()
