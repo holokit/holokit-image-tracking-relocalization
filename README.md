@@ -13,7 +13,7 @@ The plugin provides two relocalization methods, which are external marker-based 
 To install this package, go to Unity Package Manager, click the + button in the top-left corner and choose "Install package from git URL". Then input the following git URL:
 
 ```
-https://github.com/holoi/holokit-immersal-multiplayer-boilerplate.git
+https://github.com/holoi/com.holoi.xr.image-tracking-relocalization.git
 ```
 
 This package requires two git URL-based dependency packages, the [HoloKit Unity SDK package](https://github.com/holoi/holokit-unity-sdk) and the [Netcode MultipeerConnectivity transport package](https://github.com/Unity-Technologies/multiplayer-community-contributions/tree/main/Transports/com.community.netcode.transport.multipeer-connectivity). The HoloKit Unity SDK is essential for accessing the physical parameters of iPhone models, and the Netcode MultipeerConnectivity transport is necessary for connecting nearby iOS devices.
