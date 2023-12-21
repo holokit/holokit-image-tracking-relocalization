@@ -113,6 +113,8 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         public UnityEvent OnAlignmentMarkerDenied;
 
+        public UnityEvent OnResyncPose;
+
         private void Start_Client()
         {
             m_ARTrackedImageManager = FindFirstObjectByType<ARTrackedImageManager>();
@@ -347,6 +349,13 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
             if (m_AlignmentMarker != null)
                 Destroy(m_AlignmentMarker);
+        }
+
+        public void ResyncPose()
+        {
+            OnResyncPose?.Invoke();
+
+            OnTimestampSyncedInternal();
         }
     }
 }

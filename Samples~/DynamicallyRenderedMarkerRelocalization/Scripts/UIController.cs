@@ -20,6 +20,8 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.Samples.DynamicallyRend
 
         [SerializeField] private GameObject m_AlignmentMarkerPanel;
 
+        [SerializeField] private GameObject m_ResyncPoseButton;
+
         [SerializeField] private GameObject m_ConnectingText;
 
         [SerializeField] private GameObject m_SyncingTimestampText;
@@ -95,6 +97,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.Samples.DynamicallyRend
             m_HostPanel.SetActive(false);
             m_ClientPanel.SetActive(false);
             m_AlignmentMarkerPanel.SetActive(false);
+            m_ResyncPoseButton.SetActive(false);
             m_ConnectingText.SetActive(false);
             m_SyncingTimestampText.SetActive(false);
             m_TrackingMarkerText.SetActive(false);
@@ -146,6 +149,13 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.Samples.DynamicallyRend
         public void OnAlignmentMarkerAccepted()
         {
             m_AlignmentMarkerPanel.SetActive(false);
+            m_ResyncPoseButton.SetActive(true);
+        }
+
+        public void OnResyncPose()
+        {
+            m_ResyncPoseButton.SetActive(false);
+            m_TrackingMarkerText.SetActive(true);
         }
 
         public void AcceptMarker()
@@ -156,6 +166,11 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.Samples.DynamicallyRend
         public void DenyMarker()
         {
             m_NetworkImageTrackingStablizer.DenyAlignmentMarker();
+        }
+
+        public void ResyncPose()
+        {
+            m_NetworkImageTrackingStablizer.ResyncPose();
         }
     }
 }
