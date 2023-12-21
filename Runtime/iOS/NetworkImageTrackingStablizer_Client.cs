@@ -322,10 +322,10 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             m_AlignmentMarker = Instantiate(m_AlignmentMarkerPrefab);
 
             // Find the host player object and set the alignment marker its child so that the alignment marker will follow the host device
-            var playerControllers = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+            var playerControllers = FindObjectsByType<PlayerPoseSynchronizer>(FindObjectsSortMode.None);
             foreach (var playerController in playerControllers)
             {
-                if (playerController.OwnerClientId == 0)
+                if (playerController.OwnerClientId == NetworkManager.ServerClientId)
                 {
                     m_AlignmentMarker.transform.SetParent(playerController.transform);
                     m_AlignmentMarker.transform.localPosition = m_CameraToScreenCenterOffset.Value;

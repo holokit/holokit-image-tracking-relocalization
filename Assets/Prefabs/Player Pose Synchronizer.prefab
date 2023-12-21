@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7553905206283443512}
   - component: {fileID: 6904341543641820676}
   m_Layer: 0
-  m_Name: Player Prefab
+  m_Name: Player Pose Synchronizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
