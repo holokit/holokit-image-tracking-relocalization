@@ -30,7 +30,7 @@ We have successfully tested them with the following software versions:
 
 - Unity 2023.2.2f1
 - Xcode 15.1 beta 3
-- 
+
 In theory, other versions of Unity and Xcode that are close to these should also be compatible. However, if you encounter any issues during the build process, feel free to raise an issue in the repository.
 
 ## External Marker Relocalization
