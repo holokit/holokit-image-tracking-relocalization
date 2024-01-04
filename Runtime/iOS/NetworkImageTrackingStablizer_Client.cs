@@ -11,6 +11,7 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.Events;
 using Unity.Netcode;
 using System;
+using HoloInteractive.XR.HoloKit.iOS;
 
 namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 {
@@ -135,7 +136,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         private void FixedUpdate()
         {
             if (m_ClientStatus == ClientStatus.SyncingTimestamp)
-                OnRequestTimestampServerRpc(NativeApi.GetSystemUptime());
+                OnRequestTimestampServerRpc(m_AppleNativeProvider.GetSystemUptime());
         }
 
         [ClientRpc]
@@ -144,7 +145,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             if (m_ClientStatus != ClientStatus.SyncingTimestamp)
                 return;
 
-            double currentClientTimestamp = NativeApi.GetSystemUptime();
+            double currentClientTimestamp = m_AppleNativeProvider.GetSystemUptime();
             double offset = hostTimestamp + (currentClientTimestamp - oldClientTimestamp) / 2 - currentClientTimestamp;
             m_TimestampOffsetQueue.Enqueue(offset);
             // Calculate the queue's standard deviation if the size of the queue is larger than the threshold.
@@ -177,8 +178,8 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         {
             m_ClientStatus = ClientStatus.SyncingPose;
 
-            m_ARKitNativeProvider = new();
-            m_ARKitNativeProvider.OnARSessionUpdatedFrame += OnARSessionUpdatedFrame_Client;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.OnARSessionUpdatedFrame += OnARSessionUpdatedFrame_Client;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.InterceptUnityARSessionDelegate();
 
             foreach (var trackable in m_ARTrackedImageManager.trackables)
                 trackable.gameObject.SetActive(true);
@@ -189,9 +190,8 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         public void StopTrackingMarker()
         {
-            m_ARKitNativeProvider.OnARSessionUpdatedFrame -= OnARSessionUpdatedFrame_Client;
-            m_ARKitNativeProvider.Dispose();
-            m_ARKitNativeProvider = null;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.OnARSessionUpdatedFrame -= OnARSessionUpdatedFrame_Client;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.RestoreUnityARSessionDelegate();
 
             foreach (var trackable in m_ARTrackedImageManager.trackables)
                 trackable.gameObject.SetActive(false);
@@ -214,6 +214,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         private void OnARSessionUpdatedFrame_Client(double timestamp, Matrix4x4 matrix)
         {
+            Debug.Log($"OnARSessionUpdatedFrame_Client timestamp: {timestamp}");
             m_LatestARSessionFrameTimestamp = timestamp;
         }
 
@@ -304,7 +305,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             var lastSyncResult = m_SyncResultQueue.Last();
             float theta = lastSyncResult.ThetaInDegree;
             Vector3 translate = lastSyncResult.Translate;
-            m_ARKitNativeProvider.ResetOrigin(translate, Quaternion.AngleAxis(theta, Vector3.up));
+            HoloKitARKitManager.Instance.ARKitNativeProvider.ResetWorldOrigin(translate, Quaternion.AngleAxis(theta, Vector3.up));
 
             StopTrackingMarker();
 

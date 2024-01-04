@@ -10,6 +10,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using Unity.Netcode;
+using HoloInteractive.XR.HoloKit.iOS;
 
 namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 {
@@ -18,8 +19,16 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
     /// </summary>
     public partial class NetworkImageTrackingStablizer : NetworkBehaviour
     {
+        private AppleNativeProvider m_AppleNativeProvider;
+
         private void Start()
         {
+            m_AppleNativeProvider = new();
+            if (HoloKitARKitManager.Instance == null)
+            {
+                Debug.LogWarning("[NetworkImageTrackingStablizer] Failed to find HoloKitARKitManager instance in the scene.");
+            }
+
             Start_Host();
             Start_Client();
 
@@ -30,6 +39,13 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         {
             OnNetworkSpawn_Host();
             OnNetworkSpawn_Client();
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            m_AppleNativeProvider.Dispose();
         }
 
         public static double CalculateStdDev(IEnumerable<double> values)

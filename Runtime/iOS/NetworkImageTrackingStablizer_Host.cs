@@ -6,8 +6,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 using Unity.Netcode;
+using HoloInteractive.XR.HoloKit.iOS;
 
 namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 {
@@ -36,8 +36,6 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         /// </summary>
         private readonly Queue<TimedCameraPose> m_TimedCameraPoseQueue = new();
 
-        private ARKitNativeProvider m_ARKitNativeProvider;
-
         private MarkerRenderer m_MarkerRenderer;
 
         private bool m_IsDisplayingMarker;
@@ -65,8 +63,8 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         public void StartDisplayingMarker()
         {
 #if !UNITY_EDITOR
-            m_ARKitNativeProvider = new();
-            m_ARKitNativeProvider.OnARSessionUpdatedFrame += OnARSessionUpdatedFrame_Host;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.OnARSessionUpdatedFrame += OnARSessionUpdatedFrame_Host;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.InterceptUnityARSessionDelegate();
 #endif
 
             (m_CameraToMarkerOffset.Value, m_CameraToScreenCenterOffset.Value) = m_MarkerRenderer.SpawnMarker();
@@ -76,9 +74,8 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         public void StopDisplayingMarker()
         {
 #if !UNITY_EDITOR
-            m_ARKitNativeProvider.OnARSessionUpdatedFrame -= OnARSessionUpdatedFrame_Host;
-            m_ARKitNativeProvider.Dispose();
-            m_ARKitNativeProvider = null;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.OnARSessionUpdatedFrame -= OnARSessionUpdatedFrame_Host;
+            HoloKitARKitManager.Instance.ARKitNativeProvider.RestoreUnityARSessionDelegate();
 #endif
 
             m_MarkerRenderer.DestroyMarker();
@@ -87,6 +84,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         private void OnARSessionUpdatedFrame_Host(double timestamp, Matrix4x4 matrix)
         {
+            Debug.Log($"OnARSessionUpdatedFrame_Host timestamp: {timestamp}");
             TimedCameraPose timedCameraPose = new()
             {
                 Timestamp = timestamp,
@@ -94,7 +92,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
             };
 
             m_TimedCameraPoseQueue.Enqueue(timedCameraPose);
-            double currentTime = NativeApi.GetSystemUptime();
+            double currentTime = m_AppleNativeProvider.GetSystemUptime();
             // Get rid of early poses
             while (m_TimedCameraPoseQueue.Count > 0 && currentTime - m_TimedCameraPoseQueue.Peek().Timestamp > m_TimedCameraPoseTimestampThreshold)
             {
@@ -106,7 +104,7 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
         private void OnRequestTimestampServerRpc(double clientTimestamp, ServerRpcParams serverRpcParams = default)
         {
             // Get the current host timestamp
-            double hostTimestamp = NativeApi.GetSystemUptime();
+            double hostTimestamp = m_AppleNativeProvider.GetSystemUptime();
             ClientRpcParams clientRpcParams = new()
             {
                 Send = new ClientRpcSendParams
