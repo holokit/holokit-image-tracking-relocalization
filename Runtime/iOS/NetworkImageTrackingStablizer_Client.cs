@@ -214,7 +214,6 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         private void OnARSessionUpdatedFrame_Client(double timestamp, Matrix4x4 matrix)
         {
-            Debug.Log($"OnARSessionUpdatedFrame_Client timestamp: {timestamp}");
             m_LatestARSessionFrameTimestamp = timestamp;
         }
 

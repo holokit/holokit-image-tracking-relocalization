@@ -84,7 +84,6 @@ namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
 
         private void OnARSessionUpdatedFrame_Host(double timestamp, Matrix4x4 matrix)
         {
-            Debug.Log($"OnARSessionUpdatedFrame_Host timestamp: {timestamp}");
             TimedCameraPose timedCameraPose = new()
             {
                 Timestamp = timestamp,
