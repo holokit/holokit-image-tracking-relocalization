@@ -15,10 +15,10 @@
     "url": "https://reality.design"
   },
   "dependencies": {
-    "com.unity.xr.arfoundation": "5.1.0",
-    "com.unity.xr.arkit": "5.1.0",
-    "com.unity.netcode.gameobjects": "1.7.1",
-    "com.unity.shadergraph": "16.0.4"
+    "com.unity.xr.arfoundation": "5.1.2",
+    "com.unity.xr.arkit": "5.1.2",
+    "com.unity.netcode.gameobjects": "1.8.1",
+    "com.unity.shadergraph": "14.0.10"
   },
   "samples": [
     {
