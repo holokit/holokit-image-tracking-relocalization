@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2023 Holo Interactive <dev@holoi.com>
+// SPDX-FileCopyrightText: Copyright 2023 Reality Design Lab <dev@reality.design>
 // SPDX-FileContributor: Yuchen Zhang <yuchenz27@outlook.com>
 // SPDX-License-Identifier: MIT
 
@@ -11,9 +11,9 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.Events;
 using Unity.Netcode;
 using System;
-using HoloInteractive.XR.HoloKit.iOS;
+using HoloKit.iOS;
 
-namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
+namespace HoloKit.ImageTrackingRelocalization.iOS
 {
     public enum ClientStatus
     {

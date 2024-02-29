@@ -1,12 +1,12 @@
-// SPDX-FileCopyrightText: Copyright 2023 Holo Interactive <dev@holoi.com>
+// SPDX-FileCopyrightText: Copyright 2023 Reality Design Lab <dev@reality.design>
 // SPDX-FileContributor: Yuchen Zhang <yuchenz27@outlook.com>
 // SPDX-License-Identifier: MIT
 
 #if UNITY_IOS
 using UnityEngine;
-using HoloInteractive.XR.HoloKit;
+using HoloKit;
 
-namespace HoloInteractive.XR.ImageTrackingRelocalization.iOS
+namespace HoloKit.ImageTrackingRelocalization.iOS
 {
     public class MarkerRenderer : MonoBehaviour
     {

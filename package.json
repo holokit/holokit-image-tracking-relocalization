@@ -1,7 +1,7 @@
 {
-  "name": "com.holoi.xr.image-tracking-relocalization",
+  "name": "io.holokit.image-tracking-relocalization",
   "displayName": "Image Tracking Relocalization",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "unity": "2022.3",
   "description": "This Unity plugin relocalizes AR coordinate systems across one or more devices using enhanced image tracking. It achieves stability by processing a sequence of consecutively tracked image poses, ensuring precise and consistent AR experiences.",
   "keywords": [
@@ -10,9 +10,9 @@
     "arfoundation"
   ],
   "author": {
-    "name": "Holo Interactive",
-    "email": "yuchenz27@outlook.com",
-    "url": "https://holoi.com"
+    "name": "Reality Design Lab",
+    "email": "dev@reality.design",
+    "url": "https://reality.design"
   },
   "dependencies": {
     "com.unity.xr.arfoundation": "5.1.0",
